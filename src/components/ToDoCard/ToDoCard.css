@@ -1,9 +1,20 @@
 .to-do-card{
     border: 1px solid green;
-    padding: 5px 10px;
+    padding: 10px 20px;
     border-radius: 5px;
     margin: 10px 5px;
     font-size: 19px;
+    position: relative;
     
-    
+}
+.category{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    /* background-color:#DCD9D4 ; */
+    font-size: 15px;
+    padding: 5px 10px;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
 }

@@ -1,27 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import addIcon from "./add.png";
 import ToDoCard from "../../components/ToDoCard/ToDoCard";
-// import { useState } from 'react';
 import toast, { Toaster } from "react-hot-toast";
+import { json } from "react-router-dom";
 
 function Home() {
   const [todoList, setTodoList] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [category, setCategory] = useState("");
 
+  useEffect(()=>{
+    const savedTodoList=localStorage.getItem("todoList")
+    if (savedTodoList){
+      setTodoList(JSON.parse(savedTodoList))
+    }
+  }, 
+ 
+  [])
+
+  useEffect(() =>{
+if(todoList.length === 0 ) return
+localStorage.setItem("todoList" , JSON.stringify(todoList))
+
+   }, [todoList])
+
   return (
     <div>
       <h1 className="app-title">To Do Application 📝</h1>
       <div className="to-do-list-container">
-        {todoList.map((todoItem, i) => (
-          <ToDoCard key={i} todoItem={todoItem} />
-        ))}
-        {todoList.length === 0 ? (
+        {todoList.map((todoItem, i) => {
+          const { task, category } = todoItem;
+
+          return <ToDoCard key={i} task={task} category={category} />;
+        })}
+        {todoList.length === 0 ? 
           <p style={{ textAlign: "center" }}>
-            no task added,please add new task
-          </p>
-        ) : null}
+            No task added, please add a new task.
+          </p>:null
+        }
       </div>
       <div className="to-do-item-container">
         <input
@@ -32,12 +49,11 @@ function Home() {
           onChange={(e) => setNewTask(e.target.value)}
         />
 
-        <select 
-        className="category-select" 
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
+        <select
+          className="category-select"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
         >
-          
           <option value="">Category</option>
           <option value="learning">Learning</option>
           <option value="work">Work</option>
@@ -53,12 +69,17 @@ function Home() {
           alt="Add"
           onClick={() => {
             if (newTask === "") {
-              toast.error("task cannot ne empty");
+              toast.error("Task cannot be empty!");
               return;
             }
-            setTodoList([...todoList, newTask]);
+            if (category === "") {
+              toast.error("Category cannot be empty!");
+              return;
+            }
+            setTodoList([...todoList, { task: newTask, category: category }]);
             setNewTask("");
-            toast.success("task added succesfully");
+            setCategory("");
+            toast.success("Task added successfully!");
           }}
         />
       </div>
