@@ -3,8 +3,11 @@
     padding: 10px 20px;
     border-radius: 5px;
     margin: 10px 5px;
-    font-size: 19px;
+    font-size: 18px;
     position: relative;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
     
 }
 .category{
@@ -13,8 +16,17 @@
     right: 5px;
     /* background-color:#DCD9D4 ; */
     font-size: 15px;
-    padding: 5px 10px;
+    padding: 5px 2px;
     width: 100px;
     text-align: center;
     border-radius: 10px;
+    margin-right: 10px;
+}
+.delete-image{
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.delete-image:hover{
+    height: 21px;
 }
